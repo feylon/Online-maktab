@@ -37,7 +37,14 @@ Talaba
     </div>
 
     <div class="flex justify-end">
-      <button class="w-[100px] h-[40px] text-white bg-blue-900 mt-4 hover:bg-blue-800 delay-100" type="submit">Kirish</button>
+      <button :disabled = "loader?true:false" :class="loader?'cursor-not-allowed opacity-75':''" class="flex items-center justify-evenly w-[100px] h-[40px] text-white bg-blue-900 mt-4 hover:bg-blue-800 delay-100" type="submit">
+        <div v-if="loader"><i class="fas fa-spinner animate-spin"></i>
+        </div>
+        <span v-else class="">
+        Kirish
+
+      </span>
+      </button>
     </div>
 
   </form>
@@ -50,14 +57,47 @@ Talaba
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useMessage } from 'naive-ui'
+import { useMessage } from 'naive-ui';
+import { useRouter } from 'vue-router';
+function server(login, password, int){
+ return new Promise((resolve, reject)=>{
+   setTimeout(()=>{
+    reject( new Error("Vaqt oshib ketdi"))
+   },3000)
+  setTimeout(()=>{
+  if(login == "Gaytes" && password == "1")
+    resolve('true1')
+  else reject(new Error("Login yoki parol xato"));
+
+  }, int);
+
+ })
+}
+const router = useRouter();
 const message = useMessage();
 const login = ref("");
 const password = ref("");
 const status = ref("");
+const loader = ref(false);
+const enter = async function (){
+  if(login.value.trim() == "") {message.warning("Loginni kiriting");return;}
+  if(password.value.trim() == "") {message.warning("Parolni kiriting");return;}
+  
+  console.log("run...")  
+  loader.value = true;
+  try{
+    // let data = await server(6000);
+    console.log(await server(login.value,password.value, 2000));
+    router.push("student");
+  }
+    catch(err){
+      console.log(err);
+  loader.value = false;  
+ message.error("Login yoki parol xato");
+ login.value = "";
+ password.value = "";
 
-const enter = function (){
-    message.error("options")
+    }
 }
 </script>
 
