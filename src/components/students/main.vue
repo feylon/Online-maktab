@@ -38,7 +38,9 @@
       </n-layout-sider>
       <n-layout>
         <div class="p-3">
-            salom
+            salom <span class="material-symbols-outlined">
+book_5
+</span>
         </div>
       </n-layout>
     </n-layout>
@@ -48,85 +50,119 @@
 
 <script setup>
 import { ref,h } from 'vue';
+
+import { RouterLink } from "vue-router";
 import { useMessage, NAvatar, NText } from "naive-ui";
 
 function renderIcon(className) {
   return () => h("i", {class:className});
 }
 
+function renderIconSpan(name) {
+  return () => h("span", {class:"material-symbols-outlined"},{default:()=>name});
+}
+
 let inverted = ref(true)
 const menuOptions = [
+  
   {
-    label: "Hear the Wind Sing",
-    key: "hear-the-wind-sing",
-    icon: renderIcon("far fa-user")
-  },
-  {
-    label: "Pinball 1973",
+    label: "O'quv reja",
     key: "pinball-1973",
-    // icon: renderIcon(BookIcon),
-    disabled: true,
+     icon: renderIcon("fas fa-book"),
+    disabled: false,
     children: [
       {
-        label: "Rat",
-        key: "rat"
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Dars jadvali" }),
+        key: "Dars jadvali",
+        icon: renderIcon("fas fa-calendar-days")
+      },
+      {
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Fan resurslari" }),
+        key: "Fan resurslari",
+        icon: renderIcon("fas fa-receipt")
+      },
+      {
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Davomat" }),
+        key: "Davomat",
+        icon: renderIcon("far fa-calendar-xmark")
+      },
+      {
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Jurnal" }),
+        key: "Jurnal",
+        icon: renderIconSpan("book_5")
+      },
+      {
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Topshiriqlar" }),
+        key: "Topshiriqlar",
+        icon: renderIconSpan("contract_edit")
+        
       }
     ]
   },
   {
-    label: "A Wild Sheep Chase",
-    key: "a-wild-sheep-chase",
-    disabled: true,
-    // icon: renderIcon(BookIcon)
-  },
-  {
-    label: "Dance Dance Dance",
-    key: "Dance Dance Dance",
-    // icon: renderIcon(BookIcon),
-    children: [
+    label:"Tizim",
+    key:"Tizim",
+    icon: renderIconSpan("engineering"),
+    children:[
       {
-        type: "group",
-        label: "People",
-        key: "people",
-        children: [
-          {
-            label: "Narrator",
-            key: "narrator",
-            // icon: renderIcon(PersonIcon)
-          },
-          {
-            label: "Sheep Man",
-            key: "sheep-man",
-            // icon: renderIcon(PersonIcon)
-          }
-        ]
+        label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "Kirish tarixi" }),
+        key:"Kirish tarixi",
+        icon: renderIconSpan("manage_history"),
+
       },
       {
-        label: "Beverage",
-        key: "beverage",
-        // icon: renderIcon(WineIcon),
-        children: [
-          {
-            label: "Whisky",
-            key: "whisky"
-          }
-        ]
-      },
+        label: () => h(
+      RouterLink,
       {
-        label: "Food",
-        key: "food",
-        children: [
-          {
-            label: "Sandwich",
-            key: "sandwich"
-          }
-        ]
+        to:"/login"
       },
-      {
-        label: "The past increases. The future recedes.",
-        key: "the-past-increases-the-future-recedes"
+      { default: () => "Profil" }),
+        key:"Profil",
+        icon: renderIconSpan("account_circle"),
+
       }
     ]
+    },
+  {
+    label: () => h(
+      RouterLink,
+      {
+        to:"/login"
+      },
+      { default: () => "To'lov" }),
+      key:"tulov",
+      icon: renderIconSpan("payments"),
+
   }
 ];
 
@@ -211,6 +247,12 @@ function handleSelect(key) {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style>
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
 </style>
